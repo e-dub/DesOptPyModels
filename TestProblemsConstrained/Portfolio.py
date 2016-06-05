@@ -24,7 +24,7 @@ fOpt = 14.12%
 ------------------------------------------------------------------------------------------------------------------------
 """
 
-from DesOptPyDev import DesOpt
+from DesOptPy import DesOpt
 import numpy as np
 
 def SysEq(x, gc):
