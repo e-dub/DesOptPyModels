@@ -39,16 +39,18 @@ xU = np.ones([2, ])*5
 gc = []
 Alg = "NLPQLP"
 AlgOptions = OptAlgOptions.setDefault(Alg)
-SensList = [SensEq, ""]
-SP = [[]]*len(SensList)
-Name = ["AnaSens", "NumSens"]
-for ii in range(len(SensList)):
-    xOpt, fOpt, SP[ii] = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq, 
-                                SensEq=SensList[ii], Alg=Alg, AlgOptions=AlgOptions,
+SensEqList = [SensEq, "", ""]
+SensCalcList = ["", "FD", "AD"]
+SP = [[]]*len(SensEqList)
+Name = ["AnaSens", "NumSens", "AutoDiff"]
+for ii in range(len(SensEqList)):
+    xOpt, fOpt, SP[ii] = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq, SensCalc=SensCalcList[ii],
+                                SensEq=SensEqList[ii], Alg=Alg, AlgOptions=AlgOptions,
                                 DesVarNorm=True, deltax=1e-6,
                                 ResultReport=False, StatusReport=True, 
                                 OptNameAdd="RosenSens"+Name[ii])
-for ii in range(len(SensList)):
+for ii in range(len(SensEqList)):
     print Name[ii]+":"
     print "nIter: " + str(SP[ii]['nIter'])
     print "nEval: " + str(SP[ii]['nEval'])
+    print ""
