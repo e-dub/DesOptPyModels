@@ -11,15 +11,15 @@ Description:
 
 Rosenbrock test function for design optimization
 
-xOpt = []
-fOpt = 0.0
+xOpt = [1, 1]
+fOpt = 0
 
 ------------------------------------------------------------------------------------------------------------------------
 """
-import sys
-import numpy as np
+
 from DesOptPy import DesOpt
 from DesOptPy import OptAlgOptions
+import numpy as np
 from scipy.optimize import rosen, rosen_der
 
 
@@ -33,11 +33,22 @@ def SensEq(x, f, g, gc):
     return dfdx, []
 
 
-x0 = np.zeros([2, ])
+x0 = np.ones([2, ])*-1
 xL = np.ones([2, ])*-5
 xU = np.ones([2, ])*5
 gc = []
-xOpt, fOpt, SP = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq,
-                        Alg="SLSQP", StatusReport=False,   DesVarNorm=True, OptNameAdd="FDUnnorm",
-                        DoE=False, SBDO=False, ResultReport=False,
-                        deltax=1e-6)
+Alg = "NLPQLP"
+AlgOptions = OptAlgOptions.setDefault(Alg)
+SensList = [SensEq, ""]
+SP = [[]]*len(SensList)
+Name = ["AnaSens", "NumSens"]
+for ii in range(len(SensList)):
+    xOpt, fOpt, SP[ii] = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq, 
+                                SensEq=SensList[ii], Alg=Alg, AlgOptions=AlgOptions,
+                                DesVarNorm=True, deltax=1e-6,
+                                ResultReport=False, StatusReport=True, 
+                                OptNameAdd="RosenSens"+Name[ii])
+for ii in range(len(SensList)):
+    print Name[ii]+":"
+    print "nIter: " + str(SP[ii]['nIter'])
+    print "nEval: " + str(SP[ii]['nEval'])
