@@ -4,9 +4,9 @@ Title:    Textbook.py
 Units:    -
 Author:   E.J. Wehrle
 Date:     November 30, 2014
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Description:
 
 Testbook test function for design optimization
@@ -21,7 +21,7 @@ Constrained:
 xOpt = [0.5, 0.5]
 fOpt = 0.125
 
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 """
 
 from DesOptPy import DesOpt
@@ -38,6 +38,6 @@ xL = np.array([0.5, -2.9])
 xU = np.array([5.8, 2.9])
 gc = np.array([0.0, 0.0])
 x0 = xU
-xOpt, fOpt, SP = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq, Alg="SLSQP", StatusReport=True, DesVarNorm="xLxU",
+xOpt, fOpt, Output = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq, Alg="SLSQP", StatusReport=True, DesVarNorm="xLxU",
                         DoE=False, SBDO=False, ResultReport=False, deltax=1e-10, OptNameAdd="Textbook")
 

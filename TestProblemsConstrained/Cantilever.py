@@ -4,9 +4,9 @@ Title:    Cantilever.py
 Units:    -
 Author:   E.J. Wehrle
 Date:     November 30, 2014
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Description:
 
 Cantilever test function for design optimization
@@ -15,13 +15,13 @@ Source:  Dakota User's Guide §21.6
 
 xOpt = [ 2.35342485  3.32421007]
 fOpt = 7.82327859
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 """
-
+from __future__ import absolute_import, division, print_function
 from DesOptPy import DesOpt
 from DesOptPy import OptAlgOptions
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 def SysEq(x, gc):
     e = 2.9e7
@@ -46,21 +46,53 @@ def SysEq(x, gc):
     D4 = D1*np.sqrt(D2)/D0
     g1 = stress/r - 1.
     g2 = D4 - 1.
-    return(f, [g1, g2])
+    return f, [g1, g2]
 
 
 xL = np.array([1.0, 1.0])
 xU = np.array([4.0, 4.0])
 gc = np.array([0.0, 0.0])
 x0 = np.array([1.8, 1.0])
-Alg = "PyGMO_sa_corana"
-AlgOptions = OptAlgOptions.setDefault(Alg)
-AlgOptions.iter = 500
-AlgOptions.Ts = 10
-AlgOptions.Tf = 0.3
-AlgOptions.steps = 1
-AlgOptions.bin_size = 1
-AlgOptions.nIndiv = 1
-xOpt, fOpt, SP = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq, Alg=Alg, StatusReport=False,
-                        DesVarNorm=True, DoE=False, SBDO=False, ResultReport=False, deltax=1e-2,
-                        Debug=False, OptNameAdd="Cantilever", AlgOptions=AlgOptions)
+
+AlgList = ["SNOPT", "NLPQL", "NLPQLP", "FSQP", "SLSQP", "PSQP", "ALGENCAN",
+           "FILTERSD", "MMA", "GCMMA", "CONMIN", "COBYLA", "SDPEN", "MMFD",
+           "SOLVOPT", "ALPSO", "NSGA2", "ALHSO", "MIDACO", "IPOPT"]
+xOpt = {}
+fOpt = {}
+Output = {}
+AlgBrokenList = []
+AlgWorkingList = []
+for Alg in AlgList:
+    try:
+        AlgOptions = OptAlgOptions.setDefault(Alg)
+        xOpt[Alg], fOpt[Alg], Output[Alg] = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc,
+                                                   SysEq=SysEq, Alg=Alg,
+                                                   AlgOptions=AlgOptions,
+                                                   deltax=1e-2,
+                                                   DesVarNorm=True,
+                                                   Debug=True,
+                                                   ResultReport=False,
+                                                   StatusReport=False,
+                                                   OptNameAdd="Cantilever"+Alg)
+        AlgWorkingList.append(Alg)
+    except:
+        AlgBrokenList.append(Alg)
+
+
+print("On this machine, the following algorithms are not working:")
+for Alg in AlgBrokenList:
+    print(Alg)
+nEvalAll = []
+fOptAll = []
+for Alg in AlgWorkingList:
+    nEvalAll.append(Output[Alg]["nEval"])
+    fOptAll.append(fOpt[Alg])
+fig, ax = plt.subplots()
+ind = np.arange(len(AlgWorkingList))
+width = 1
+rects1 = ax.bar(ind+width, np.array(nEvalAll), width, color='r')
+#rects2 = ax.bar(ind+width, np.array(fOptAll), width, color='g')
+ax.set_xticks(ind + width)
+ax.set_xticklabels(AlgWorkingList)
+#ax.legend((rects1[0], rects2[0]), ('nEval', 'f^*'))
+plt.show()
