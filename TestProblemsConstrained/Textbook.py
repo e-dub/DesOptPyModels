@@ -27,6 +27,7 @@ fOpt = 0.125
 from DesOptPy import DesOpt
 import numpy as np
 
+
 def SysEq(x, gc):
     f = (x[0]-1.)**4 + (x[1]-1.)**4
     g1 = x[0]**2 - x[1]/2.
@@ -38,6 +39,7 @@ xL = np.array([0.5, -2.9])
 xU = np.array([5.8, 2.9])
 gc = np.array([0.0, 0.0])
 x0 = xU
-xOpt, fOpt, Output = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq, Alg="SLSQP", StatusReport=True, DesVarNorm="xLxU",
-                        DoE=False, SBDO=False, ResultReport=False, deltax=1e-10, OptNameAdd="Textbook")
-
+xOpt, fOpt, Output = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq,
+                            Alg="SLSQP", StatusReport=True, DesVarNorm="xLxU",
+                            ResultReport=False, deltax=1e-10,
+                            OptNameAdd="Textbook")
