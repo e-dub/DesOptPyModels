@@ -4,18 +4,18 @@ Title:    Griewank.py
 Units:    -
 Author:   E.J. Wehrle
 Date:     November 30, 2014
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 Description:
 
 Griewank test function for design optimization
 
 xOpt = []
 fOpt = 0.0
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 """
-
+from __future__ import absolute_import, division, print_function
 from DesOptPy import DesOpt
 import numpy as np
 
@@ -34,7 +34,7 @@ x0 = np.zeros([2, ])
 xL = np.ones([2, ])*-5
 xU = np.ones([2, ])*5
 gc = []
-xOpt, fOpt, SP = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq,
+xOpt, fOpt, Output = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq,
                         Alg="SLSQP", StatusReport=True, OptNameAdd="Griewank",
-                        DoE=False, SBDO=False, ResultReport=True,
+                        ResultReport=False,
                         deltax=1e-6)
