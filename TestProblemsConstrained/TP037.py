@@ -13,7 +13,6 @@ Test function for design optimization
 
 -------------------------------------------------------------------------------
 """
-from __future__ import absolute_import, division, print_function
 from DesOptPy import DesOpt
 import numpy as np
 
@@ -26,7 +25,7 @@ def SysEq(x, gc):
     return(f, g)
 
 
-x0 = np.zeros([3, ])*4.
+x0 = np.ones([3, ])*4.
 xL = np.ones([3, ])*0.
 xU = np.ones([3, ])*42.
 gc = np.ones([2, ])*0.

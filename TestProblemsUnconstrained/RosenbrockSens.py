@@ -16,7 +16,6 @@ fOpt = 0
 
 -------------------------------------------------------------------------------
 """
-from __future__ import absolute_import, division, print_function
 from DesOptPy import DesOpt
 from DesOptPy import OptAlgOptions
 import numpy as np
@@ -39,6 +38,7 @@ xU = np.ones([20, ])*5
 gc = []
 Alg = "NLPQLP"
 AlgOptions = OptAlgOptions.setDefault(Alg)
+AlgOptions.MAXIT=1000
 SensEqList = [SensEq, "", ""]
 SensCalcList = ["", "FD", "AD"]
 Output = [[]]*len(SensEqList)
@@ -48,7 +48,7 @@ for ii in range(len(SensEqList)):
                                  SensCalc=SensCalcList[ii],
                                  SensEq=SensEqList[ii], Alg=Alg,
                                  AlgOptions=AlgOptions,
-                                 DesVarNorm=True, deltax=1e-6,
+                                 DesVarNorm=True, deltax=1e-4,
                                  ResultReport=False, StatusReport=False,
                                  OptNameAdd="RosenSens"+Name[ii])
 for ii in range(len(SensEqList)):

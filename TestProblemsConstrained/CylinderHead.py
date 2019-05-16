@@ -17,7 +17,6 @@ xOpt = [2.122, 1.769]
 fOpt = -2.461
 -------------------------------------------------------------------------------
 """
-from __future__ import absolute_import, division, print_function
 from DesOptPy import DesOpt
 import numpy as np
 
@@ -43,7 +42,6 @@ xU = np.array([2.164, 4.0])
 gc = np.array([0.0, 0.0, 0.0])
 x0 = np.array([1.8, 1.0])
 xOpt, fOpt, Output = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq,
-                            DesVarNorm=True, Alg="COBYLA", deltax=1e-6,
+                            DesVarNorm=True, Alg="NLPQLP", deltax=1e-6,
                             Debug=False, ResultReport=False,
                             StatusReport=False, OptNameAdd="CylinderHead")
-

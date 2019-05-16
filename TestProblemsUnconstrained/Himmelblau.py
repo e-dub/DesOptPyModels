@@ -18,7 +18,6 @@ xOpt = [3.584428, -1.848126]
 fOpt = 0.0
 -------------------------------------------------------------------------------
 """
-from __future__ import absolute_import, division, print_function
 from DesOptPy import DesOpt
 import numpy as np
 

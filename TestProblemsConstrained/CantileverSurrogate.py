@@ -5,8 +5,6 @@ Units:    -
 Author:   E.J. Wehrle
 Date:     November 30, 2014
 -------------------------------------------------------------------------------
-
--------------------------------------------------------------------------------
 Description:
 
 Cantilever test function for design optimization with surrogate model using
@@ -18,7 +16,6 @@ xOpt = [ 2.35342485  3.32421007]
 fOpt = 7.82327859
 -------------------------------------------------------------------------------
 """
-from __future__ import absolute_import, division, print_function
 from DesOptPy import DesOpt
 from DesOptPy import OptAlgOptions
 import numpy as np
@@ -26,6 +23,7 @@ from supy.doe import doe
 from supy import options as op
 from supy import approximation as ap
 from supy.preprocessing import outlier_detection as ad
+
 
 def SysEq(x, gc):
     e = 2.9e7
@@ -79,6 +77,7 @@ def SysEqSurr(x, gc):
     g1 = g1Surr.predict(x)
     g2 = g2Surr.predict(x)
     return f, [g1, g2]
+
 
 Alg = "SLSQP"
 AlgOptions = OptAlgOptions.setDefault(Alg)

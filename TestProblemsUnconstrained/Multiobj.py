@@ -13,7 +13,6 @@ weighting factors resulting in a Pareto front
 
 -------------------------------------------------------------------------------
 """
-from __future__ import absolute_import, division, print_function
 from DesOptPy import DesOpt
 import numpy as np
 

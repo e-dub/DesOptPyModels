@@ -16,7 +16,6 @@ fOpt = 0.0
 
 -------------------------------------------------------------------------------
 """
-from __future__ import absolute_import, division, print_function
 from DesOptPy import DesOpt
 import numpy as np
 
@@ -34,5 +33,5 @@ xU = np.ones([2, ])*5
 gc = []
 xOpt, fOpt, Output = DesOpt(x0=x0, xL=xL, xU=xU, gc=gc, SysEq=SysEq,
                             Alg="SLSQP", StatusReport=False,
-                            OptNameAdd="Rastrigin", ResultReport=True,
+                            OptNameAdd="Rastrigin", ResultReport=False,
                             deltax=1e-6)
